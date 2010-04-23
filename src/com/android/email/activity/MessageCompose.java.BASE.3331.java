@@ -310,7 +310,6 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
             mDraftNeedsSaving = true;
             mMessageLoaded = true;
             mSourceMessageProcessed = true;
-            addSignature();
         } else {
             // Otherwise, handle the internal cases (Message Composer invoked from within app)
             long messageId = draftId != -1 ? draftId : intent.getLongExtra(EXTRA_MESSAGE_ID, -1);
@@ -322,8 +321,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
                 // But we DO need to set mMessageLoaded to indicate the message can be sent
                 mMessageLoaded = true;
                 mSourceMessageProcessed = true;
-                addSignature();
-            }            
+            }
         }
 
         if (ACTION_REPLY.equals(mAction) || ACTION_REPLY_ALL.equals(mAction) ||
@@ -336,7 +334,6 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
              */
             // TODO: signal the controller to load the message
         }
-        
         updateTitle();
     }
 
@@ -625,7 +622,6 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
             mAccount = account;
             processSourceMessageGuarded(message, mAccount);
             mMessageLoaded = true;
-            addSignature();
         }
     }
 
@@ -634,14 +630,6 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
             setTitle(R.string.compose_title);
         } else {
             setTitle(mSubjectView.getText().toString());
-        }
-    }
-
-    private void addSignature() {
-        final String sig = mAccount.getSignature();
-        // if there is a signature and the message is empty, add it
-        if (sig != null && sig.length() > 0 && mMessageContentView.getText().length() == 0) {
-        	mMessageContentView.setText("\n\n" + sig);
         }
     }
 

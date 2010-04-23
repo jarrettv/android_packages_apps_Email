@@ -205,7 +205,9 @@ public class EasSyncService extends AbstractSyncService {
             svc.mPassword = password;
             svc.mSsl = ssl;
             svc.mTrustSsl = trustCertificates;
-            svc.mDeviceId = SyncManager.getDeviceId();
+            // We mustn't use the "real" device id or we'll screw up current accounts
+            // Any string will do, but we'll go for "validate"
+            svc.mDeviceId = "validate";
             HttpResponse resp = svc.sendHttpClientOptions();
             int code = resp.getStatusLine().getStatusCode();
             userLog("Validation (OPTIONS) response: " + code);
@@ -1053,7 +1055,12 @@ public class EasSyncService extends AbstractSyncService {
                     .data(Tags.BASE_TRUNCATION_SIZE, Eas.EAS12_TRUNCATION_SIZE)
                     .end();
             } else {
-                s.data(Tags.SYNC_TRUNCATION, Eas.EAS2_5_TRUNCATION_SIZE);
+                if (className.equals("Email")) {
+                    s.data(Tags.SYNC_MIME_SUPPORT, Eas.BODY_PREFERENCE_HTML)
+                            .data(Tags.SYNC_MIME_TRUNCATION,
+                                    Eas.EAS2_5_TRUNCATION_SIZE);
+                } else
+                    s.data(Tags.SYNC_TRUNCATION, Eas.EAS2_5_TRUNCATION_SIZE);
             }
             s.end();
 

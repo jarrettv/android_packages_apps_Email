@@ -570,7 +570,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
                     message.mHtmlReply = null;
                     message.mTextReply = null;
                     message.mIntroText = null;
-                }
+                }                
             } catch (RuntimeException e) {
                 Log.d(Email.LOG_TAG, "Exception while loading message body: " + e);
                 return new Object[] {null, null};

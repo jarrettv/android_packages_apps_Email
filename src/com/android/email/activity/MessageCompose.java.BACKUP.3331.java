@@ -322,8 +322,18 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
                 // But we DO need to set mMessageLoaded to indicate the message can be sent
                 mMessageLoaded = true;
                 mSourceMessageProcessed = true;
+<<<<<<< HEAD:src/com/android/email/activity/MessageCompose.java
+                
+                // Add the signature to the new message
+                final String sig = mAccount.getSignature();
+                if (sig != null && sig.length() > 0) {
+                	mMessageContentView.setText("\n\n" + sig);
+                }
+            }
+=======
                 addSignature();
             }            
+>>>>>>> cd7084f5119370f331df007d8bc408da8e2e476d:src/com/android/email/activity/MessageCompose.java
         }
 
         if (ACTION_REPLY.equals(mAction) || ACTION_REPLY_ALL.equals(mAction) ||
@@ -570,7 +580,7 @@ public class MessageCompose extends Activity implements OnClickListener, OnFocus
                     message.mHtmlReply = null;
                     message.mTextReply = null;
                     message.mIntroText = null;
-                }
+                }                
             } catch (RuntimeException e) {
                 Log.d(Email.LOG_TAG, "Exception while loading message body: " + e);
                 return new Object[] {null, null};
